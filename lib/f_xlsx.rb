@@ -1,5 +1,5 @@
-require "f_xlsx/version"
-require "f_xlsx/xlsx"
+require "./f_xlsx/version"
+require "./f_xlsx/xlsx"
 
 module FXlsx
   class Error < StandardError; end
