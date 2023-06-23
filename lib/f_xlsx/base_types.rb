@@ -1,5 +1,3 @@
-require 'ffi'
-
 module FXlsx
   class CStrArray  < FFI::Struct
     layout :arr, :pointer,

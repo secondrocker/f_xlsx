@@ -1,11 +1,8 @@
-require 'ffi'
-require 'base_types'
-
-LIB_PATH = "../../excel.#{FFI::Platform::LIBSUFFIX}"
+LIB_PATH = File.expand_path("ext/excel.#{FFI::Platform::LIBSUFFIX}")
 module FXlsx
   module XlsxExt
     extend FFI::Library
-    ffi_lib "excel.lib"
+    ffi_lib LIB_PATH
     attach_function :printStr, [:string], :void
     
     attach_function :newFile, [], :uint32
@@ -14,6 +11,8 @@ module FXlsx
     attach_function :newSheet, [:uint32, :string], :int
     attach_function :deleteSheet, [:uint32, :string], :void
     attach_function :setSheetName, [:uint32, :string, :string], :void
+    attach_function :setSheetVisible, [:uint32, :string, :int], :void
+    attach_function :getSheetVisible, [:uint32, :string], :int
 
     attach_function :getSheetList, [:uint32], CStrArray.ptr
     attach_function :getSheetName, [:uint32, :int], :string
