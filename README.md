@@ -22,7 +22,7 @@ gem 使用ffi调用链接库提供的方法，进而提供编辑xlsx文件的功
     | f.set_sheet_name(source_sheet_name, target_sheet_name) | 修改sheet名 | source_sheet_name：要修改的sheet名<br/>target_sheet_name：要修改为sheet名 |
     | f.set_sheet_visible(sheet_name, visible) | 设置sheet可见 | sheet_name：要操作的sheet名<br/>visible： true可见，false不可见 |
     | visible = f.get_sheet_visible(sheet_name) | 获取sheet是否可见 | sheet_name：要操作的sheet名<br/> visible: 返回值 true则为可见，false不可见 |
-    | delete_sheet(sheet_name) | 删除sheet | sheet_name：要操作的sheet名 |
+    | f.delete_sheet(sheet_name) | 删除sheet | sheet_name：要操作的sheet名 |
     | names = f.get_sheet_list(sheet_name) | 获取全部sheet名 | sheet_name：要操作的sheet名<br/>names: 返回值为sheet名数组 |
     | name = f.get_sheet_name(index) | 获取指定索引sheet名 | index：sheet索引值(0开始)<br/>name: 返回值为sheet名 |
     | f.set_cell_value(sheet_name, row, col, value) | 设置单元格值 | sheet_name：要操作的sheet名<br/>row：行序号(0开始) <br/>col：列序号(0开始) <br/> value：值，可为int,float,string,nil |
