@@ -76,11 +76,12 @@ module FXlsx
         ptr = FFI::MemoryPointer.new(:float)
         ptr.write_float(value)
         2
-      elsif value.is_a?(String)
-        ptr = FFI::MemoryPointer.from_string(value)
+      else
+        ptr = FFI::MemoryPointer.from_string(value.to_s)
         3
       end
       XlsxExt.setCellValue(self.id, sheet_name, row, col, ptr, typ)
+      ptr.free if ptr
     end
   
     def get_cell_value(sheet_name, row, col)
@@ -97,7 +98,8 @@ module FXlsx
   
     def put_row(sheet_name, row_index, row)
       raise "file closed" if self.closed?
-  
+      
+      # 不需要手动释放
       str = CStrArray.new
       str[:s_size] = row.size
       ptr = FFI::MemoryPointer.new(:pointer, row.size)
@@ -111,13 +113,14 @@ module FXlsx
   
     def put_rows(sheet_name, rows)
       raise "file closed" if self.closed?
-  
+      #不需要手动释放
       str2 = CStrArray2.new
       str2[:s_size] = rows.size
       ptr2 = FFI::MemoryPointer.new(:pointer, rows.size)
       todoRelease = [ptr2]
       
       ptr2_arr = rows.map do |row|
+        # 不需要手动释放
         str = CStrArray.new
         str[:s_size] = row.size
   

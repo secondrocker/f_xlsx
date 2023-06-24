@@ -35,7 +35,10 @@ gem 使用ffi调用链接库提供的方法，进而提供编辑xlsx文件的功
     - 打开已有文件时保存：f.save  
     - 新文件保存： f.save_as(file_path)
 
-## 平台编译
+4. **注意事项**
+
+    仅能调用 FXlsx::File(含FXlsx代理出的两个方法open_file，new_file) 下的类/实例方法(即readme里说明的方法)，不要调用FXlsx::XlsxExt/FXlsx::LibC 下的任何方法；因为 FXlsx::File 下的方法调用后释放内存，而其他地方的未做内存释放。
+## 跨平台编译
     前提条件：安装 go
 1. cd ext 路径
 2. 执行go mod tidy

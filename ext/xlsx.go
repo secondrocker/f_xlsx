@@ -20,11 +20,6 @@ typedef struct str_arr2 {
 	str_arr **arr;
 	int s_size;
 } str_arr2;
-
-typedef struct cus_obj {
-	void *obj;
-	int typ;
-} cus_obj;
 */
 import "C"
 
