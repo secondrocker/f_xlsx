@@ -11,7 +11,7 @@ module FXlsx
     def self.open_file(path)
       instance = File.new
       instance.id = XlsxExt.openFile(path)
-      has_file = true
+      instance.has_file = true
       instance
     end
   
