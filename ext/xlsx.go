@@ -93,7 +93,7 @@ func getSheetName(fileId uint32, index int) *C.char {
 	f := getFile(fileId)
 	name := f.GetSheetName(index)
 	rtn := C.CString(name)
-	defer C.free(unsafe.Pointer(rtn))
+	// defer C.free(unsafe.Pointer(rtn))
 	return rtn
 }
 
@@ -155,7 +155,7 @@ func getCellValue(fileId uint32, sheetNameC *C.char, row C.int, col C.int) *C.ch
 	val, _ := f.GetCellValue(sheetName, cell)
 
 	str := C.CString(val)
-	defer C.free(unsafe.Pointer(str))
+	// defer C.free(unsafe.Pointer(str))
 	return str
 }
 
