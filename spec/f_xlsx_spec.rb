@@ -34,7 +34,7 @@ RSpec.describe FXlsx do
     f.set_sheet_visible('vv', false)
     expect(f.get_sheet_visible('vv')).to be_falsy
     f.save_as(path)
-    expect(File.exists?(path)).to be_truthy
+    expect(File.exist?(path)).to be_truthy
     File.delete(path)
   end
 end
