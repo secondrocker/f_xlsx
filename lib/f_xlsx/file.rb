@@ -3,12 +3,14 @@ module FXlsx
     attr_accessor :id, :closed, :has_file
     
     def self.new_file
+      XlsxExt.load_lib
       instance = File.new
       instance.id = XlsxExt.newFile()
       instance
     end
   
     def self.open_file(path)
+      XlsxExt.load_lib
       instance = File.new
       instance.id = XlsxExt.openFile(path)
       instance.has_file = true
