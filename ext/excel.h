@@ -22,15 +22,7 @@ typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 #line 12 "xlsx.go"
 
 #include <stdlib.h>
-typedef struct str_arr{
-	char **arr;
-	int s_size;
-} str_arr;
-
-typedef struct str_arr2 {
-	str_arr **arr;
-	int s_size;
-} str_arr2;
+#include <types.h>
 
 #line 1 "cgo-generated-wrapper"
 
@@ -104,6 +96,9 @@ extern char* getCellValue(GoUint32 fileId, char* sheetNameC, int row, int col);
 extern struct str_arr2* getRows(GoUint32 fileId, char* sheetNameC);
 extern void putRows(GoUint32 fileId, char* sheetNameC, struct str_arr2* rowsC);
 extern void putRow(GoUint32 fileId, char* sheetNameC, GoInt rowIndex, str_arr* rowC);
+extern void mergeCell(GoUint32 fileId, char* sheetNameC, GoInt startRow, GoInt startCol, GoInt endRow, GoInt endCol);
+extern void unMergeCell(GoUint32 fileId, char* sheetNameC, GoInt startRow, GoInt startCol, GoInt endRow, GoInt endCol);
+extern merge_cell_arr* getMergeCells(GoUint32 fileId, char* sheetNameC);
 extern void save(GoUint32 fileId);
 extern void saveAs(GoUint32 fileId, char* path);
 

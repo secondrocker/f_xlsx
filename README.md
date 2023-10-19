@@ -30,6 +30,11 @@ gem 使用ffi调用链接库提供的方法，进而提供编辑xlsx文件的功
     | rows = f.get_rows(sheet_name) | 获取指定sheet内全部内容 | sheet_name：要操作的sheet名<br/>rows：返回值，二维字符串数组 |
     | f.put_row(sheet_name, row_index, row) | 设置指定行内容 | sheet_name：要操作的sheet名<br/>row_index：行索引<br/> row：要设置的行内容，字符串数组 |
     | f.put_rows(sheet_name, rows) | 设置sheet内容 |  sheet_name：要操作的sheet名<br/>rows: 要设置的内容，二位字符串数组 |
+    | f.merge_cell(sheet_name, start_row, start_col, end_row, end_col) | 合并单元格 | sheet_name：要操作的sheet名<br/>start_row：左上角行索引<br/>start_col：左上角列索引<br/>end_row：右下角行索引<br/>end_col：右下角列索引 |
+    | f.unmerge_cell(sheet_name, start_row, start_col, end_row, end_col) | 拆分单元格 | sheet_name：要操作的sheet名<br/>start_row：左上角行索引<br/>start_col：左上角列索引<br/>end_row：右下角行索引<br/>end_col：右下角列索引 |
+    | cells = f.get_merge_cells(sheet_name) | 获取全部合并单元格 | sheet_name：要操作的sheet名<br/> cells: 返回值，已合并的单元格信息，数组,{ start_row：左上角行索引, start_col：左上角列索引, end_row：右下角行索引, end_col：右下角列索引, value: 单元格值(字符串) } |
+    
+
 
 3. 保存
     - 打开已有文件时保存：f.save  

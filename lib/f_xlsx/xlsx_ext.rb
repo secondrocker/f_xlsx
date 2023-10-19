@@ -29,6 +29,12 @@ module FXlsx
       attach_function :putRow, [:uint32, :string, :int, CStrArray.ptr], :void
       attach_function :putRows, [:uint32, :string, CStrArray2.ptr], :void
 
+
+      attach_function :mergeCell, [:uint32, :string, :int, :int, :int, :int], :void
+      attach_function :unMergeCell, [:uint32, :string, :int, :int, :int, :int], :void
+
+      attach_function :getMergeCells, [:uint32, :string], CCellArray.ptr
+
       attach_function :save, [:uint32], :void
       attach_function :saveAs, [:uint32, :string], :void
 

@@ -11,15 +11,7 @@ import (
 
 /*
 #include <stdlib.h>
-typedef struct str_arr{
-	char **arr;
-	int s_size;
-} str_arr;
-
-typedef struct str_arr2 {
-	str_arr **arr;
-	int s_size;
-} str_arr2;
+#include <types.h>
 */
 import "C"
 
@@ -195,6 +187,32 @@ func innerPutRow(f *excelize.File, sheetName string, rowIndex int, row []string)
 	}
 }
 
+//export mergeCell
+func mergeCell(fileId uint32, sheetNameC *C.char, startRow int, startCol int, endRow int, endCol int) {
+	f := getFile(fileId)
+	sheetName := C.GoString(sheetNameC)
+	cellStart, _ := excelize.CoordinatesToCellName(int(startCol)+1, int(startRow)+1)
+	cellEnd, _ := excelize.CoordinatesToCellName(int(endCol)+1, int(endRow)+1)
+	f.MergeCell(sheetName, cellStart, cellEnd)
+}
+
+//export unMergeCell
+func unMergeCell(fileId uint32, sheetNameC *C.char, startRow int, startCol int, endRow int, endCol int) {
+	f := getFile(fileId)
+	sheetName := C.GoString(sheetNameC)
+	cellStart, _ := excelize.CoordinatesToCellName(int(startCol)+1, int(startRow)+1)
+	cellEnd, _ := excelize.CoordinatesToCellName(int(endCol)+1, int(endRow)+1)
+	f.UnmergeCell(sheetName, cellStart, cellEnd)
+}
+
+//export getMergeCells
+func getMergeCells(fileId uint32, sheetNameC *C.char) *C.merge_cell_arr {
+	f := getFile(fileId)
+	sheetName := C.GoString(sheetNameC)
+	cells, _ := f.GetMergeCells(sheetName)
+	return fromGoCells2C(cells)
+}
+
 //export save
 func save(fileId uint32) {
 	f := getFile(fileId)
@@ -246,6 +264,31 @@ func fromArr2Go(rowC *C.struct_str_arr) []string {
 		row = append(row, C.GoString(vRow[ii]))
 	}
 	return row
+}
+
+func fromGoCells2C(cells []excelize.MergeCell) *C.merge_cell_arr {
+	var cCells = (**C.merge_cell)(C.malloc(C.size_t(len(cells)) * C.size_t(unsafe.Sizeof(C.merge_cell{}))))
+	var cellArr = (*C.merge_cell_arr)(C.malloc(C.size_t(unsafe.Sizeof(C.merge_cell_arr{}))))
+	cellArr.s_size = C.int(len(cells))
+	cellArr.cells = cCells
+	var arrCells = (*[2 << 32]*C.merge_cell)(unsafe.Pointer(cCells))
+	for i := 0; i < len(cells); i++ {
+		c := cells[i]
+		mc := (*C.merge_cell)(C.malloc(C.size_t(unsafe.Sizeof(C.merge_cell{}))))
+		startA := c.GetStartAxis()
+		startCol, startRow, _ := excelize.CellNameToCoordinates(startA)
+		endA := c.GetEndAxis()
+		endCol, endRow, _ := excelize.CellNameToCoordinates(endA)
+		cellValue := c.GetCellValue()
+		fmt.Println(cellValue)
+		mc.val = C.CString(cellValue)
+		mc.start_row = C.int(startRow) - 1
+		mc.start_col = C.int(startCol) - 1
+		mc.end_row = C.int(endRow) - 1
+		mc.end_col = C.int(endCol) - 1
+		arrCells[i] = mc
+	}
+	return cellArr
 }
 
 func fuuid() uint32 {

@@ -140,6 +140,23 @@ module FXlsx
       XlsxExt.putRows(self.id, sheet_name, str2)
       todoRelease.each(&:free)
     end
+
+    def merge_cell(sheet_name, start_row, start_col, end_row, end_col)
+      raise "file closed" if self.closed?
+      
+      XlsxExt.mergeCell(self.id, sheet_name, start_row, start_col, end_row, end_col)
+    end
+
+    def unmerge_cell(sheet_name, start_row, start_col, end_row, end_col)
+      raise "file closed" if self.closed?
+      
+      XlsxExt.unMergeCell(self.id, sheet_name, start_row, start_col, end_row, end_col)
+    end
+
+    def get_merge_cells(sheet_name)
+      raise "file closed" if self.closed?
+      XlsxExt.getMergeCells(self.id, sheet_name).values
+    end
   
     def save
       raise "file closed" if self.closed?

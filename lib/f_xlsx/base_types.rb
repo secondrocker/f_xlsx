@@ -29,4 +29,35 @@ module FXlsx
       rows
     end
   end
+
+  class CCell < FFI::Struct
+    layout :start_row, :int,
+           :start_col, :int,
+           :end_row, :int,
+           :end_col, :int,
+           :val, :string
+  end
+
+  class CCellArray < FFI::Struct
+    layout :cells, :pointer,
+           :s_size, :int
+
+    def values
+      _cells = []
+      self[:cells].read_array_of_pointer(self[:s_size]).each do |cell_ptr|
+        c = CCell.new(cell_ptr)
+        _cells << {
+          start_row: c[:start_row],
+          start_col: c[:start_col],
+          end_row: c[:end_row],
+          end_col: c[:end_col],
+          value: c[:val]
+        }
+        LibC.free(cell_ptr)
+      end
+      LibC.free(self[:cells])
+      LibC.free(self)
+      _cells
+    end
+  end
 end
