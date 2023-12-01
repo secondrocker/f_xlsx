@@ -1,4 +1,4 @@
-LIB_PATH = File.expand_path("ext/excel.#{FFI::Platform::LIBSUFFIX}")
+LIB_PATH = File.expand_path("../../../ext/excel.#{FFI::Platform::LIBSUFFIX}", __FILE__)
 module FXlsx
   module XlsxExt
 
