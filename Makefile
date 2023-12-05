@@ -17,7 +17,7 @@ else
 endif
 
 build: ext/$(LIB)
-	gem build f_xlsx.gemspec -o pkg/f_xlsx-0.2.8.gem
+	gem build f_xlsx.gemspec -o pkg/f_xlsx-0.2.9.gem
 
 ext/$(LIB): ext/types.h ext/excel.h ext/xlsx.go
 	cd ext && go mod tidy && go build -buildmode=c-shared -o $(LIB) xlsx.go
