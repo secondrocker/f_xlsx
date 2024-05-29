@@ -17,13 +17,13 @@ else
 endif
 
 build: ext/$(LIB)
-	gem build f_xlsx.gemspec -o pkg/f_xlsx-0.2.9.gem
+	gem build f_xlsx.gemspec -o pkg/f_xlsx-0.3.0.gem
 
 ext/$(LIB): ext/types.h ext/excel.h ext/xlsx.go
 	cd ext && go mod tidy && go build -buildmode=c-shared -o $(LIB) xlsx.go
 
 clean:
-	rm -f ext/$(LIB) f_xlsx-*.gem
+	rm -f ext/$(LIB) pkg/f_xlsx-*.gem
 test:
 	ruby test.rb
 stop: test.pid

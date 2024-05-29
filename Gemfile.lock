@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    f_xlsx (0.2.5)
+    f_xlsx (0.3.0)
       ffi (~> 1)
 
 GEM
